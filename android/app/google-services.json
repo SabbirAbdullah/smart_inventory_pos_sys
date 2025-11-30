@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "960427450681",
+    "project_id": "signin-test-3ab29",
+    "storage_bucket": "signin-test-3ab29.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:960427450681:android:ac4e2e28c14c2e10d848e8",
+        "android_client_info": {
+          "package_name": "com.example.posmart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "960427450681-k2nbivgj5f1qnbf20i8clmfhdbrr1jnk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.posmart",
+            "certificate_hash": "d367ba78c5272c14f4d1b499410c417210109537"
+          }
+        },
+        {
+          "client_id": "960427450681-t0ggglu189dqrjuue7d4939nch4bo4vc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARK09os3kgWdoIxnjhr91SmKUvSJUrPr4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "960427450681-t0ggglu189dqrjuue7d4939nch4bo4vc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "960427450681-rqsalqdo7rljntdc60a5cs961te94rph.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.testApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
