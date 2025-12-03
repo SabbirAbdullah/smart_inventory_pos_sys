@@ -5,11 +5,7 @@ class PaymentPage extends StatelessWidget {
   final List<Map<String, dynamic>> cartItems;
   final int total;
 
-  const PaymentPage({
-    super.key,
-    required this.cartItems,
-    required this.total,
-  });
+  const PaymentPage({super.key, required this.cartItems, required this.total});
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +55,7 @@ class PaymentPage extends StatelessWidget {
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-              boxShadow: [
-                BoxShadow(color: Colors.black12, blurRadius: 10),
-              ],
+              boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 10)],
             ),
 
             child: Column(
@@ -70,15 +64,17 @@ class PaymentPage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text("Total Payable",
-                        style: TextStyle(fontSize: 16, color: Colors.grey)),
+                    const Text(
+                      "Total Payable",
+                      style: TextStyle(fontSize: 16, color: Colors.grey),
+                    ),
                     Text(
                       "$total BDT",
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
-                    )
+                    ),
                   ],
                 ),
 
@@ -94,17 +90,20 @@ class PaymentPage extends StatelessWidget {
                         context: context,
                         builder: (_) => AlertDialog(
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16)),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
                           title: const Text("Payment Successful"),
                           content: const Text("Thank you for your purchase!"),
                           actions: [
                             TextButton(
                               onPressed: () {
                                 Navigator.pop(context);
-                                context.go("/"); /// back to POS
+                                context.go("/");
+
+                                /// back to POS
                               },
                               child: const Text("OK"),
-                            )
+                            ),
                           ],
                         ),
                       );
@@ -143,7 +142,7 @@ class PaymentPage extends StatelessWidget {
             color: Colors.black12.withOpacity(0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
-          )
+          ),
         ],
       ),
       child: Center(
@@ -154,11 +153,8 @@ class PaymentPage extends StatelessWidget {
             const SizedBox(height: 10),
             Text(
               title,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
-            )
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
           ],
         ),
       ),

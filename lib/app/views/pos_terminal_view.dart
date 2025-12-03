@@ -34,7 +34,10 @@ class PosTerminalPage extends StatelessWidget {
           backgroundColor: AppColors.appBarColor,
           scrolledUnderElevation: 0,
           toolbarHeight: 50,
-          title: const Text('Pos Terminal',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600),),
+          title: const Text(
+            'Pos Terminal',
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+          ),
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(60),
             child: Padding(
@@ -52,16 +55,26 @@ class PosTerminalPage extends StatelessWidget {
                   color: Colors.white,
                   borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
                 ),
-                child: BlocBuilder<POSBloc, POSState>(builder: (context, state) {
-                  return AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 400),
-                    transitionBuilder: (child, animation) {
-                      final offsetAnimation = Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero).animate(animation);
-                      return SlideTransition(position: offsetAnimation, child: child);
-                    },
-                    child: state.isCartVisible ? _CartView(state: state) : _GridView(state: state),
-                  );
-                }),
+                child: BlocBuilder<POSBloc, POSState>(
+                  builder: (context, state) {
+                    return AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 400),
+                      transitionBuilder: (child, animation) {
+                        final offsetAnimation = Tween<Offset>(
+                          begin: const Offset(0, 1),
+                          end: Offset.zero,
+                        ).animate(animation);
+                        return SlideTransition(
+                          position: offsetAnimation,
+                          child: child,
+                        );
+                      },
+                      child: state.isCartVisible
+                          ? _CartView(state: state)
+                          : _GridView(state: state),
+                    );
+                  },
+                ),
               ),
             ),
           ],
@@ -81,24 +94,33 @@ class _SearchAndScanRow extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: BlocBuilder<POSBloc, POSState>(builder: (context, state) {
-            return Container(
-              height: 40,
-              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(50)),
-              child: TextField(
-                onChanged: (v) => bloc.add(UpdateSearchText(v)),
-                cursorColor: AppColors.appColor,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.search, color: Color(0xff868686)),
-                  hintText: 'Search product here. . .',
-                  border: InputBorder.none,
+          child: BlocBuilder<POSBloc, POSState>(
+            builder: (context, state) {
+              return Container(
+                height: 40,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(50),
                 ),
-              ),
-            );
-          }),
+                child: TextField(
+                  onChanged: (v) => bloc.add(UpdateSearchText(v)),
+                  cursorColor: AppColors.appColor,
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.search, color: Color(0xff868686)),
+                    hintText: 'Search product here. . .',
+                    border: InputBorder.none,
+                  ),
+                ),
+              );
+            },
+          ),
         ),
         IconButton(
-          icon: const Icon(Icons.qr_code_scanner, size: 28, color: Colors.white),
+          icon: const Icon(
+            Icons.qr_code_scanner,
+            size: 28,
+            color: Colors.white,
+          ),
           onPressed: () async {
             final ok = await requestCameraPermission(context);
             if (!ok) return;
@@ -121,25 +143,38 @@ class _CategoryFilter extends StatelessWidget {
     final categories = ['All', 'Bags', 'Electronics'];
     return SizedBox(
       height: 60,
-      child: BlocBuilder<POSBloc, POSState>(builder: (context, state) {
-        return SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: categories.map((category) {
-              final selected = state.selectedCategory == category;
-              return GestureDetector(
-                onTap: () => bloc.add(UpdateCategory(category)),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  margin: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(color: selected ? AppColors.appColor : Colors.white, borderRadius: BorderRadius.circular(20)),
-                  child: Text(category, style: TextStyle(color: selected ? Colors.white : Colors.black)),
-                ),
-              );
-            }).toList(),
-          ),
-        );
-      }),
+      child: BlocBuilder<POSBloc, POSState>(
+        builder: (context, state) {
+          return SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: categories.map((category) {
+                final selected = state.selectedCategory == category;
+                return GestureDetector(
+                  onTap: () => bloc.add(UpdateCategory(category)),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                    margin: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: selected ? AppColors.appColor : Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      category,
+                      style: TextStyle(
+                        color: selected ? Colors.white : Colors.black,
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          );
+        },
+      ),
     );
   }
 }
@@ -153,21 +188,52 @@ class _GridView extends StatelessWidget {
     final bloc = context.read<POSBloc>();
     // sample items - move to repo in real app
     final allItems = [
-      {"sku": "sku_macbook", "imageUrl": 'assets/box.png', "name": "Apple MacBook Pro 16", "category": "Electronics", "price": 300},
-      {"sku": "sku_watch", "imageUrl": 'assets/box.png', "name": "Smart Watch", "category": "Electronics", "price": 300},
-      {"sku": "sku_bag", "imageUrl": 'assets/box.png', "name": "Leather Bag", "category": "Bags", "price": 200},
+      {
+        "sku": "sku_macbook",
+        "imageUrl": 'assets/box.png',
+        "name": "Apple MacBook Pro 16",
+        "category": "Electronics",
+        "price": 300,
+      },
+      {
+        "sku": "sku_watch",
+        "imageUrl": 'assets/box.png',
+        "name": "Smart Watch",
+        "category": "Electronics",
+        "price": 300,
+      },
+      {
+        "sku": "sku_bag",
+        "imageUrl": 'assets/box.png',
+        "name": "Leather Bag",
+        "category": "Bags",
+        "price": 200,
+      },
     ];
 
-    final filtered = state.selectedCategory == 'All' ? allItems : allItems.where((i) => i['category'] == state.selectedCategory).toList();
+    final filtered = state.selectedCategory == 'All'
+        ? allItems
+        : allItems
+              .where((i) => i['category'] == state.selectedCategory)
+              .toList();
 
     // also apply search filter
     final search = state.searchText.toLowerCase();
-    final finalList = (search.isEmpty) ? filtered : filtered.where((i) => (i['name'] as String).toLowerCase().contains(search)).toList();
+    final finalList = (search.isEmpty)
+        ? filtered
+        : filtered
+              .where(
+                (i) => (i['name'] as String).toLowerCase().contains(search),
+              )
+              .toList();
 
     return GridView.builder(
       key: const ValueKey('GridView'),
       padding: const EdgeInsets.all(8),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: 0.6),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        childAspectRatio: 0.6,
+      ),
       itemCount: finalList.length,
       itemBuilder: (context, index) {
         final item = finalList[index];
@@ -179,7 +245,9 @@ class _GridView extends StatelessWidget {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               _showCartBottomSheet(context);
             });
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Added to cart')));
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(const SnackBar(content: Text('Added to cart')));
           },
         );
       },
@@ -199,7 +267,10 @@ class _CartView extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 16, top: 16, bottom: 8),
-          child: Text('Cart Items (${state.scannedProducts.length})', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
+          child: Text(
+            'Cart Items (${state.scannedProducts.length})',
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+          ),
         ),
         Expanded(
           child: ListView(
@@ -212,7 +283,9 @@ class _CartView extends StatelessWidget {
                 direction: DismissDirection.endToStart,
                 onDismissed: (_) {
                   bloc.add(RemoveProductEvent(sku));
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Item removed')));
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(const SnackBar(content: Text('Item removed')));
                 },
                 background: Container(
                   color: Colors.red,
@@ -229,7 +302,9 @@ class _CartView extends StatelessWidget {
                   onRemove: () => bloc.add(ChangeQuantityEvent(sku, -1)),
                   onDelete: () {
                     bloc.add(RemoveProductEvent(sku));
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Item deleted')));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Item deleted')),
+                    );
                   },
                 ),
               );
@@ -245,44 +320,83 @@ class _BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<POSBloc>();
-    return BlocBuilder<POSBloc, POSState>(builder: (context, state) {
-      return BottomAppBar(
-        color: AppColors.appColor,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 1),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              GestureDetector(
-                onTap: () => bloc.add(ToggleCartVisibility()),
-                child: Row(
+    return BlocBuilder<POSBloc, POSState>(
+      builder: (context, state) {
+        return BottomAppBar(
+          color: AppColors.appColor,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 1),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: () => bloc.add(ToggleCartVisibility()),
+                  child: Row(
+                    children: [
+                      Icon(
+                        state.isCartVisible
+                            ? Icons.keyboard_arrow_up
+                            : Icons.keyboard_arrow_down,
+                        color: Colors.white,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        '${state.scannedProducts.length} Items',
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Icon(state.isCartVisible ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down, color: Colors.white),
-                    const SizedBox(width: 8),
-                    Text('${state.scannedProducts.length} Items', style: const TextStyle(color: Colors.white)),
+                    const Text(
+                      'Total',
+                      style: TextStyle(color: Colors.white70),
+                    ),
+                    Text(
+                      '${state.totalPrice} BDT',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ],
                 ),
-              ),
-              Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-                const Text('Total', style: TextStyle(color: Colors.white70)),
-                Text('${state.totalPrice} BDT', style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
-              ]),
-              ElevatedButton(
-                onPressed: () {
-                  // prepare cart details and navigate to checkout
-                  final cart = state.scannedProducts.entries.map((e) => {'sku': e.key, 'quantity': e.value, 'price': state.productPrices[e.key] ?? 300}).toList();
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) =>  CheckoutPage(cartItems: cart),
-                  ),);
-                },
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
-                child: const Text('Checkout', style: TextStyle(color: Colors.black)),
-              )
-            ],
+                ElevatedButton(
+                  onPressed: () {
+                    // prepare cart details and navigate to checkout
+                    final cart = state.scannedProducts.entries
+                        .map(
+                          (e) => {
+                            'sku': e.key,
+                            'quantity': e.value,
+                            'price': state.productPrices[e.key] ?? 300,
+                          },
+                        )
+                        .toList();
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            CheckoutPage(cartItems: cart),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                  ),
+                  child: const Text(
+                    'Checkout',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
 
@@ -303,7 +417,9 @@ class _QRScannerDialog extends StatelessWidget {
                 if (b.rawValue != null) {
                   bloc.add(AddOrIncrementProduct(b.rawValue!));
                   Navigator.of(context).pop();
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('QR added')));
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(const SnackBar(content: Text('QR added')));
                   break;
                 }
               }
@@ -312,7 +428,10 @@ class _QRScannerDialog extends StatelessWidget {
           Positioned(
             top: 16,
             right: 16,
-            child: IconButton(icon: const Icon(Icons.close, color: Colors.white), onPressed: () => Navigator.of(context).pop()),
+            child: IconButton(
+              icon: const Icon(Icons.close, color: Colors.white),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
           ),
         ],
       ),
@@ -324,7 +443,9 @@ void _showCartBottomSheet(BuildContext context) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
-    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
     builder: (context) {
       return DraggableScrollableSheet(
         expand: false,
@@ -332,39 +453,54 @@ void _showCartBottomSheet(BuildContext context) {
         minChildSize: 0.4,
         maxChildSize: 0.9,
         builder: (context, scrollController) {
-          return BlocBuilder<POSBloc, POSState>(builder: (context, state) {
-            final bloc = context.read<POSBloc>();
-            return Container(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  Container(width: 60, height: 6, margin: const EdgeInsets.only(bottom: 10), decoration: BoxDecoration(color: Colors.grey[400], borderRadius: BorderRadius.circular(3))),
-                  Expanded(
-                    child: ListView.builder(
-                      controller: scrollController,
-                      itemCount: state.scannedProducts.length,
-                      itemBuilder: (context, index) {
-                        final entry = state.scannedProducts.entries.elementAt(index);
-                        final sku = entry.key;
-                        final qty = entry.value;
-                        final pricePerItem = state.productPrices[sku] ?? 300;
-                        return CartItemTile(
-                          sku: sku,
-                          productName: sku,
-                          price: pricePerItem * qty,
-                          quantity: qty,
-                          onAdd: () => bloc.add(ChangeQuantityEvent(sku, 1)),
-                          onRemove: () => bloc.add(ChangeQuantityEvent(sku, -1)),
-                          onDelete: () => bloc.add(RemoveProductEvent(sku)),
-                        );
-                      },
+          return BlocBuilder<POSBloc, POSState>(
+            builder: (context, state) {
+              final bloc = context.read<POSBloc>();
+              return Container(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    Container(
+                      width: 60,
+                      height: 6,
+                      margin: const EdgeInsets.only(bottom: 10),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[400],
+                        borderRadius: BorderRadius.circular(3),
+                      ),
                     ),
-                  ),
-                  TotalSummaryCard(total: context.read<POSBloc>().state.discountedTotal),
-                ],
-              ),
-            );
-          });
+                    Expanded(
+                      child: ListView.builder(
+                        controller: scrollController,
+                        itemCount: state.scannedProducts.length,
+                        itemBuilder: (context, index) {
+                          final entry = state.scannedProducts.entries.elementAt(
+                            index,
+                          );
+                          final sku = entry.key;
+                          final qty = entry.value;
+                          final pricePerItem = state.productPrices[sku] ?? 300;
+                          return CartItemTile(
+                            sku: sku,
+                            productName: sku,
+                            price: pricePerItem * qty,
+                            quantity: qty,
+                            onAdd: () => bloc.add(ChangeQuantityEvent(sku, 1)),
+                            onRemove: () =>
+                                bloc.add(ChangeQuantityEvent(sku, -1)),
+                            onDelete: () => bloc.add(RemoveProductEvent(sku)),
+                          );
+                        },
+                      ),
+                    ),
+                    TotalSummaryCard(
+                      total: context.read<POSBloc>().state.discountedTotal,
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
         },
       );
     },

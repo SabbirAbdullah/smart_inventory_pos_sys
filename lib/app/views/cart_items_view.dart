@@ -5,7 +5,6 @@ import '../bloc/pos/pos_bloc.dart';
 import '../bloc/pos/pos_state.dart';
 import '../core/constants.dart';
 
-
 class CartItemTile extends StatelessWidget {
   final String sku;
   final String productName;
@@ -34,37 +33,94 @@ class CartItemTile extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(color: AppColors.borderColor)),
-            child: Padding(padding: const EdgeInsets.all(8.0), child: Image.asset('assets/box.png', width: 90, height: 90, fit: BoxFit.cover)),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: AppColors.borderColor),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset(
+                'assets/box.png',
+                width: 90,
+                height: 90,
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
           const SizedBox(width: 10),
           Expanded(
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text("SKU: $sku", style: const TextStyle(color: Colors.grey, fontSize: 12, fontStyle: FontStyle.italic)),
-              Text(productName, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
-              Text("$price BDT", style: const TextStyle(color: Colors.blue, fontSize: 14, fontWeight: FontWeight.w700)),
-              Row(
-                children: [
-                  Container(
-                    height: 30,
-                    width: 30,
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(color: AppColors.borderColor)),
-                    child: IconButton(padding: EdgeInsets.zero, icon: const Icon(Icons.remove, color: Colors.grey), onPressed: onRemove),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "SKU: $sku",
+                  style: const TextStyle(
+                    color: Colors.grey,
+                    fontSize: 12,
+                    fontStyle: FontStyle.italic,
                   ),
-                  const SizedBox(width: 10),
-                  Text("$quantity", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                  const SizedBox(width: 10),
-                  Container(
-                    height: 30,
-                    width: 30,
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(color: AppColors.borderColor)),
-                    child: IconButton(padding: EdgeInsets.zero, icon: const Icon(Icons.add, color: Colors.grey), onPressed: onAdd),
+                ),
+                Text(
+                  productName,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
                   ),
-                ],
-              ),
-            ]),
+                ),
+                Text(
+                  "$price BDT",
+                  style: const TextStyle(
+                    color: Colors.blue,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                Row(
+                  children: [
+                    Container(
+                      height: 30,
+                      width: 30,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: AppColors.borderColor),
+                      ),
+                      child: IconButton(
+                        padding: EdgeInsets.zero,
+                        icon: const Icon(Icons.remove, color: Colors.grey),
+                        onPressed: onRemove,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      "$quantity",
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Container(
+                      height: 30,
+                      width: 30,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: AppColors.borderColor),
+                      ),
+                      child: IconButton(
+                        padding: EdgeInsets.zero,
+                        icon: const Icon(Icons.add, color: Colors.grey),
+                        onPressed: onAdd,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-          IconButton(icon: const Icon(Icons.delete, color: Colors.red), onPressed: onDelete),
+          IconButton(
+            icon: const Icon(Icons.delete, color: Colors.red),
+            onPressed: onDelete,
+          ),
         ],
       ),
     );
